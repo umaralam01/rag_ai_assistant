@@ -43,5 +43,4 @@ It integrates multiple AI models to process and understand multimodal data — c
 
 ### 1️⃣ Clone this repository
 ```bash
-git clone https://github.com/umaralam01/multimodal-rag-ai.git
-cd multimodal-rag-ai
+git clone https://github.com/umaralam01/rag_ai_assistant
