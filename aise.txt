@@ -1,0 +1,31 @@
+  // ---------------------- Audio control ----------------------
+      const bgAudio = document.getElementById("bgAudio");
+      const muteBtn = document.getElementById("muteBtn");
+      let audioAllowed = false;
+      function toggleAudio() {
+        if (!audioAllowed) {
+          // try play; some browsers require a user gesture
+          bgAudio
+            .play()
+            .then(() => {
+              audioAllowed = true;
+              muteBtn.textContent = "Mute";
+              muteBtn.setAttribute("aria-pressed", "false");
+            })
+            .catch(() => {
+              audioAllowed = false;
+              muteBtn.textContent = "Mute";
+            });
+          return;
+        }
+        if (bgAudio.paused) {
+          bgAudio.play();
+          muteBtn.textContent = "Mute";
+          muteBtn.setAttribute("aria-pressed", "false");
+        } else {
+          bgAudio.pause();
+          muteBtn.textContent = "Unmute";
+          muteBtn.setAttribute("aria-pressed", "true");
+        }
+      }
+      muteBtn.addEventListener("click", toggleAudio);

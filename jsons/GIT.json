@@ -1,0 +1,136 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "text": "Introduction to Version Control & Git\nWhat is Version Control?\nDefinition: Version control is a system that records changes to files over time so\nyou can recall specific versions later. It’s like a time machine for your code.\nWhy use it?\nTracks changes over time.\nRestores older versions when something breaks.\nAllows multiple people to work on the same project.\nHelps experiment safely.\nThe problem without version control:\nThis is messy, error-prone, and hard to manage.\nCentralized vs Distributed Version Control\nCentralized (CVCS) – e.g., SVN\nOne central server stores the code.\nIf the server goes down, no one can commit changes.\n• \n• \n• \n• \nindex.html\nindex_final.html\nindex_final_final.html\nindex_final_v2_really_final.html\n• \n• \n• \nCodeWithHarry"
+    },
+    {
+      "page": 2,
+      "text": "Distributed (DVCS) – e.g., Git\nEvery developer has a complete copy of the repository.\nYou can commit changes offline.\nMore robust against server failures.\nWhat is Git?\nGit is a distributed version control system created by Linus Torvalds (the\ncreator of Linux) in 2005.\nGit tracks changes in your files, especially source code.\nWorks locally first and then syncs with remote repositories.\nGit vs GitHub\nGit → The tool that manages your code history (installed on your computer).\nGitHub → A hosting service for Git repositories (like Google Drive for your Git\nprojects). Also alternatives: GitLab, Bitbucket.\nInstalling Git\nWindows\nGo to https://git-scm.com/.\nDownload the installer.\nFollow the prompts (use default settings if unsure).\nmacOS\n• \n• \n• \n• \n• \n• \n• \n• \n• \n1. \n2. \n3. \nbrew install git\nCodeWithHarry"
+    },
+    {
+      "page": 3,
+      "text": "Linux (Debian/Ubuntu)\nConfiguring Git\nRun these commands in your terminal after installing Git:\nTo check your config:\nGit Workflow Basics\nGit has three key areas:\nWorking Directory – Where you edit files.\nStaging Area – Where you prepare files for committing.\nRepository – Where committed changes are stored permanently.\nBasic flow:\nsudo apt update\nsudo apt install git\ngit config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"\ngit config --global core.editor \"code --wait\"\n# optional, sets VS Code as editor\ngit config --list\n1. \n2. \n3. \nEdit files → git add → git commit\nCodeWithHarry"
+    },
+    {
+      "page": 4,
+      "text": "First Git Commands\nLet’s try:\nOutput:\nYou’ve just created your first local Git repository.\nMini Exercise\nInstall Git on your system.\nConfigure your name and email.\nCreate a folder named my-first-repo .\nInitialize it with git init .\nRun git status  and see what it says.\nmkdir my-first-git-project\ncd my-first-git-project\ngit init\nInitialized empty Git repository in ...\n1. \n2. \n3. \n4. \n5. \nCodeWithHarry"
+    },
+    {
+      "page": 5,
+      "text": "First Steps with Git\nCreating a Repository\nThere are two ways to start working with Git:\n1. Starting from scratch\nYou’ll see:\nThis .git  folder is the brain of your repository — it stores the entire history of\nyour project.\n2. Cloning an existing repository\nThis downloads the entire project with history from a remote server like GitHub.\nAdding Files\nLet’s create a file:\nmkdir my-first-repo\ncd my-first-repo\ngit init\nInitialized empty Git repository in /path/to/my-first-repo/.git/\ngit clone https://github.com/user/repo.git\nCodeWithHarry"
+    },
+    {
+      "page": 6,
+      "text": "Check what Git sees:\nYou’ll see:\nUntracked means Git sees the file but hasn’t started tracking it.\nStaging Changes\nTo start tracking the file:\nTo stage everything at once:\nAt this point, the file is staged — ready to be saved into history.\nCommitting Changes\nA commit is like taking a snapshot of your project:\necho \"Hello Git!\" > hello.txt\ngit status\nUntracked files:\n  hello.txt\ngit add hello.txt\ngit add .\ngit commit -m \"Add hello.txt with a greeting\"\nCodeWithHarry"
+    },
+    {
+      "page": 7,
+      "text": "Commit messages should describe why the change was made, not just what\nchanged.\nViewing History\nTo see the commit history:\nFor a shorter, cleaner view:\nExample:\nUnderstanding the Git Workflow\nFiles in Git move through three main states:\nUntracked – not being tracked yet.\nStaged – ready to be committed.\nCommitted – saved permanently in the Git history.\nBasic flow:\ngit log\ngit log --oneline\na1b2c3d Add hello.txt with a greeting\n1. \n2. \n3. \nWorking Directory → git add → Staging Area → git commit → Repository\nCodeWithHarry"
+    },
+    {
+      "page": 8,
+      "text": "Making Further Changes\nEdit the file:\nCheck the status:\nYou’ll see it’s “modified.” Stage and commit:\nQuick Command Recap\nPractice Challenge\nCreate a folder git-practice .\nInitialize it as a Git repo.\nAdd a file notes.txt  with some text.\nStage and commit it with a clear message.\necho \"This is my first change\" >> hello.txt\ngit status\ngit add hello.txt\ngit commit -m \"Update hello.txt with a new line\"\ngit init                # start a new repository\ngit clone <url>\n# copy a repository\ngit status              # check file states\ngit add <file>\n# stage changes\ngit commit -m \"msg\"\n# save staged changes\ngit log --oneline       # view history in short form\n1. \n2. \n3. \n4. \nCodeWithHarry"
+    },
+    {
+      "page": 9,
+      "text": "Modify notes.txt  and commit the change.\nRun git log --oneline  to see your commits.\n5. \n6. \nCodeWithHarry"
+    },
+    {
+      "page": 10,
+      "text": "Tracking & Managing Changes\nChecking Status\nThe most important diagnostic command in Git:\nThis tells you:\nWhich branch you’re on\nWhat files are modified\nWhat files are staged\nWhat files are untracked\nStatus States\ngit status\n• \n• \n• \n• \n# Untracked (new file)\nUntracked files:\n  newfile.txt\n# Modified (changed but not staged)\nChanges not staged for commit:\n  modified: existing.txt\n# Staged (ready to commit)\nChanges to be committed:\n  new file: newfile.txt\n  modified: existing.txt\nCodeWithHarry"
+    },
+    {
+      "page": 11,
+      "text": "Viewing Changes\nSee Unstaged Changes\nShows what you’ve changed but haven’t staged yet.\nSee Staged Changes\nShows what will go into your next commit.\nSee Changes Between Commits\nCompares the last commit with the current one.\nUndoing Changes\nGit provides several ways to undo changes depending on where they are:\n1. Discard Working Directory Changes\nTo restore a file to its last committed state:\nOr for all files:\ngit diff\ngit diff --staged\ngit diff HEAD~1 HEAD\ngit restore file.txt\ngit restore .\nCodeWithHarry"
+    },
+    {
+      "page": 12,
+      "text": "Warning: This permanently discards uncommitted changes!\n2. Unstage Files\nTo remove files from staging area but keep changes:\nOr the older syntax:\n3. Amend the Last Commit\nForgot to include a file or want to change the commit message?\n4. Reset to a Previous Commit\nSoft Reset (keeps changes in staging):\nMixed Reset (keeps changes in working directory):\nHard Reset (discards all changes):\ngit restore --staged file.txt\ngit reset HEAD file.txt\n# Stage the forgotten file\ngit add forgotten.txt\n# Amend the previous commit\ngit commit --amend -m \"New commit message\"\ngit reset --soft HEAD~1\ngit reset HEAD~1\nCodeWithHarry"
+    },
+    {
+      "page": 13,
+      "text": "Warning: --hard  permanently deletes uncommitted work!\nIgnoring Files\nNot all files should be tracked by Git (e.g., passwords, compiled files, system files).\nCreating .gitignore\nCreate a .gitignore  file in your repository root:\nCommon .gitignore Patterns\ngit reset --hard HEAD~1\ntouch .gitignore\n# Ignore specific files\nsecret.txt\nconfig.env\n# Ignore file types\n*.log\n*.tmp\n*.cache\n# Ignore directories\nnode_modules/\nbuild/\ndist/\n# Ignore files in any directory\n**/*.bak\nCodeWithHarry"
+    },
+    {
+      "page": 14,
+      "text": "Global .gitignore\nSet up a global ignore file for all repositories:\nCommon .gitignore Templates\nFor Node.js projects:\nFor Python projects:\nFor IDE/Editor files:\n# Exception: Track this file even if ignored\n!important.log\ngit config --global core.excludesfile ~/.gitignore_global\nnode_modules/\nnpm-debug.log\n.env\ndist/\n*.log\n__pycache__/\n*.py[cod]\n*$py.class\nvenv/\n.env\n*.egg-info/\n.vscode/\n.idea/\n*.swp\n.DS_Store\nThumbs.db\nCodeWithHarry"
+    },
+    {
+      "page": 15,
+      "text": "Removing Files from Git\nRemove File from Repository and Disk\nRemove File from Repository but Keep on Disk\nThis is useful when you accidentally committed a file that should be ignored.\nMoving/Renaming Files\nGit tracks file movements:\nThis is equivalent to:\ngit rm file.txt\ngit commit -m \"Remove file.txt\"\ngit rm --cached file.txt\ngit commit -m \"Stop tracking file.txt\"\ngit mv oldname.txt newname.txt\ngit commit -m \"Rename oldname.txt to newname.txt\"\nmv oldname.txt newname.txt\ngit rm oldname.txt\ngit add newname.txt\nCodeWithHarry"
+    },
+    {
+      "page": 16,
+      "text": "Practical Examples\nExample 1: Fixing a Mistake\nExample 2: Cleaning Up Working Directory\n# You accidentally staged a file\ngit add passwords.txt\n# Unstage it\ngit restore --staged passwords.txt\n# Add it to .gitignore\necho \"passwords.txt\" >> .gitignore\n# Stage and commit .gitignore\ngit add .gitignore\ngit commit -m \"Add .gitignore to exclude sensitive files\"\n# See what's changed\ngit status\n# Review the changes\ngit diff\n# Discard changes to a specific file\ngit restore style.css\n# Or discard all changes\ngit restore .\nCodeWithHarry"
+    },
+    {
+      "page": 17,
+      "text": "Command Summary\nCommand\nDescription\ngit status\nShow working tree status\ngit diff\nShow unstaged changes\ngit diff --staged\nShow staged changes\ngit restore [file]\nDiscard working directory changes\ngit restore --staged [file]\nUnstage files\ngit reset --soft HEAD~1\nUndo last commit, keep changes staged\ngit reset HEAD~1\nUndo last commit, keep changes unstaged\ngit reset --hard HEAD~1\nUndo last commit, discard changes\ngit rm [file]\nRemove file from repository\ngit rm --cached [file]\nStop tracking file\ngit mv [old] [new]\nRename/move file\nExercise\nCreate a new repository with several files\nMake changes to multiple files\nUse git status  and git diff  to review changes\nStage only some changes\nCreate a .gitignore  file and add patterns\nPractice undoing changes with git restore\nTry amending a commit with git commit --amend\nExperiment with different reset options (be careful with --hard !)\nChallenge: Create a file with sensitive data, commit it, then properly remove it from\nhistory and add it to .gitignore .\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \nCodeWithHarry"
+    },
+    {
+      "page": 18,
+      "text": "Branching & Merging\nWhy Branches Matter\nBranches allow you to:\nWork on features without affecting the main code\nExperiment safely\nCollaborate without conflicts\nMaintain multiple versions of your project\nThink of branches as parallel universes of your code.\nUnderstanding Branches\nWhat is a Branch?\nA branch is a movable pointer to a commit. The default branch is usually called \nmain  (or master  in older repositories).\nView Current Branch\nThe asterisk (*) shows your current branch:\n• \n• \n• \n• \ngit branch\n* main\n  feature-login\n  bugfix-header\nCodeWithHarry"
+    },
+    {
+      "page": 19,
+      "text": "View All Branches (Including Remote)\nCreating and Switching Branches\nCreate a New Branch\nSwitch to a Branch\nOr with the newer command:\nCreate and Switch in One Command\nOr:\ngit branch -a\ngit branch feature-navbar\ngit checkout feature-navbar\ngit switch feature-navbar\ngit checkout -b feature-navbar\ngit switch -c feature-navbar\nCodeWithHarry"
+    },
+    {
+      "page": 20,
+      "text": "Working with Branches\nMaking Changes on a Branch\nSwitching Between Branches\nMerging Branches\nFast-Forward Merge\nWhen there are no divergent commits, Git simply moves the pointer forward:\n# Create and switch to new branch\ngit checkout -b feature-login\n# Make changes\necho \"Login form\" > login.html\ngit add login.html\ngit commit -m \"Add login form\"\n# Your changes exist only on this branch\n# Switch back to main\ngit checkout main\n# login.html doesn't exist here!\n# Switch back to feature branch\ngit checkout feature-login\n# login.html is back!\n# On main branch\ngit checkout main\nCodeWithHarry"
+    },
+    {
+      "page": 21,
+      "text": "Output:\nThree-Way Merge\nWhen branches have diverged, Git creates a merge commit:\nGit will open an editor for the merge commit message.\nResolving Merge Conflicts\nConflicts occur when the same lines are changed in different branches.\nWhat a Conflict Looks Like\nOutput:\n# Merge feature branch\ngit merge feature-navbar\nFast-forward\n navbar.html | 10 ++++++++++\n1 file changed, 10 insertions(+)\ngit checkout main\ngit merge feature-login\ngit merge feature-branch\nAuto-merging index.html\nCONFLICT (content): Merge conflict in index.html\nAutomatic merge failed; fix conflicts and then commit the result.\nCodeWithHarry"
+    },
+    {
+      "page": 22,
+      "text": "Conflict Markers in File\nResolving Conflicts\nOpen the conflicted file\nDecide which changes to keep\nRemove conflict markers\nStage and commit\nConflict Resolution Strategies\nUnderstanding “ours” and “theirs”:\nDuring a merge conflict, Git uses specific terminology: - “ours” = The branch you’re\ncurrently on (the branch you’re merging INTO) - “theirs” = The branch you’re\nmerging FROM (the incoming changes)\nKeep current branch changes (ours):\nThis keeps the version from your current branch, discarding all changes from the\nincoming branch. Works properly when: - You’re certain your current branch has\nthe correct implementation - The incoming changes are outdated or incorrect -\nYou want to maintain consistency with other files in your branch\nKeep incoming branch changes (theirs):\n<<<<<<< HEAD\n<h1>Welcome to Our Site</h1>\n=======\n<h1>Welcome to My Website</h1>\n>>>>>>> feature-branch\n1. \n2. \n3. \n4. \n# After editing the file\ngit add index.html\ngit commit -m \"Resolve merge conflict in index.html\"\ngit checkout --ours index.html\nCodeWithHarry"
+    },
+    {
+      "page": 23,
+      "text": "This accepts all changes from the branch you’re merging, discarding your current\nbranch’s version. Works properly when: - The incoming branch has the most up-to-\ndate or correct version - Your current changes are no longer needed - You want to\nfully adopt the incoming implementation\nImportant Note: These commands work ONLY during an active merge conflict.\nThey replace the entire file with either version, not individual conflict sections.\nUse a merge tool:\nBranch Management\nDelete a Branch\nAfter merging, you can delete the branch:\nRename a Branch\ngit checkout --theirs index.html\ngit mergetool\n# Delete local branch\ngit branch -d feature-navbar\n# Force delete (if not merged)\ngit branch -D feature-navbar\n# Rename current branch\ngit branch -m new-name\n# Rename a different branch\ngit branch -m old-name new-name\nCodeWithHarry"
+    },
+    {
+      "page": 24,
+      "text": "List Merged/Unmerged Branches\nBranching Strategies\nFeature Branch Workflow\nHotfix Workflow\n# Show merged branches\ngit branch --merged\n# Show unmerged branches\ngit branch --no-merged\n# 1. Create feature branch\ngit checkout -b feature-shopping-cart\n# 2. Work on feature\n# ... make commits ...\n# 3. Merge back to main\ngit checkout main\ngit merge feature-shopping-cart\n# 4. Delete feature branch\ngit branch -d feature-shopping-cart\n# 1. Create hotfix from main\ngit checkout main\ngit checkout -b hotfix-security\n# 2. Fix the issue\n# ... make changes ...\ngit commit -m \"Fix security vulnerability\"\nCodeWithHarry"
+    },
+    {
+      "page": 25,
+      "text": "Visualizing Branches\nSee Branch Graph\nOutput:\nSee Branch Divergence\nShows commits in feature-branch that aren’t in main.\nBest Practices\nKeep branches focused - One feature per branch\n# 3. Merge to main\ngit checkout main\ngit merge hotfix-security\n# 4. Also merge to develop if exists\ngit checkout develop\ngit merge hotfix-security\ngit log --graph --oneline --all\n* 3a4f5d6 (HEAD -> main) Merge feature-login\n|\\\n| * 8b9c0d1 (feature-login) Add login form\n* | 7e2f3a5 Update homepage\n|/\n* 1d2e3f4 Initial commit\ngit log main..feature-branch\n1. \nCodeWithHarry"
+    },
+    {
+      "page": 26,
+      "text": "Use descriptive names - feature-user-auth  not new-stuff\nDelete merged branches - Keep repository clean\nMerge regularly - Don’t let branches diverge too much\nTest before merging - Ensure branch works correctly\nCommon Branch Naming Conventions\nfeature/  - New features (feature/user-login)\nbugfix/  - Bug fixes (bugfix/header-alignment)\nhotfix/  - Urgent production fixes (hotfix/security-patch)\nrelease/  - Release preparation (release/v2.0)\nchore/  - Maintenance tasks (chore/update-dependencies)\nCommand Summary\nCommand\nDescription\ngit branch\nList branches\ngit branch [name]\nCreate branch\ngit checkout [branch]\nSwitch branch\ngit checkout -b [branch]\nCreate and switch\ngit switch [branch]\nSwitch branch (newer)\ngit switch -c [branch]\nCreate and switch (newer)\ngit merge [branch]\nMerge branch into current\ngit branch -d [branch]\nDelete branch\ngit branch -m [new-name]\nRename branch\ngit log --graph --oneline --all\nVisualize branches\n2. \n3. \n4. \n5. \n• \n• \n• \n• \n• \nCodeWithHarry"
+    },
+    {
+      "page": 27,
+      "text": "Practice Exercise\nCreate a new repository\nCreate a file main.txt  with “Main branch content”\nCreate a branch called feature-a\nAdd a file feature-a.txt  and commit\nSwitch back to main\nCreate another branch feature-b  from main\nAdd a file feature-b.txt  and commit\nMerge feature-a  into main\nMerge feature-b  into main\nCreate a conflict intentionally and resolve it\nAdvanced: Try rebasing instead of merging to maintain a linear history.\n1. \n2. \n3. \n4. \n5. \n6. \n7. \n8. \n9. \n10. \nCodeWithHarry"
+    },
+    {
+      "page": 28,
+      "text": "Essential Remote Repository Commands\nConnecting to Remotes\nView Remotes\nAdd Remote\nChange Remote URL\nCore Operations\nClone Repository\nPush Changes\ngit remote -v\ngit remote add origin https://github.com/username/repository.git\ngit remote set-url origin https://github.com/username/new-repo.git\ngit clone https://github.com/username/repository.git\n# First push (set upstream)\ngit push -u origin main\nCodeWithHarry"
+    },
+    {
+      "page": 29,
+      "text": "Pull Changes\nFetch Changes\nBranch Management\nList Remote Branches\nDelete Remote Branch\n# Regular push\ngit push\n# Push specific branch\ngit push origin branch-name\n# Pull (fetch + merge)\ngit pull\n# Pull specific branch\ngit pull origin branch-name\n# Fetch without merging\ngit fetch\n# Fetch all remotes\ngit fetch --all\ngit branch -r\ngit push origin --delete branch-name\nCodeWithHarry"
+    },
+    {
+      "page": 30,
+      "text": "Git Stash - Essential Commands\nWhat is Git Stash?\nGit stash temporarily saves your uncommitted changes so you can work on\nsomething else, then come back and re-apply them later.\nCore Stash Commands\nSave Changes to Stash\nView Stashes\nOutput example:\n# Stash all changes\ngit stash\n# Stash with a message\ngit stash save \"work in progress on feature X\"\n# Include untracked files\ngit stash -u\n# List all stashes\ngit stash list\nstash@{0}: On main: work in progress on feature X\nstash@{1}: WIP on develop: 5002d47 fix conflict\nCodeWithHarry"
+    },
+    {
+      "page": 31,
+      "text": "Apply Stash\nRemove Stashes\nUseful Stash Operations\nView Stash Contents\n# Apply most recent stash\ngit stash apply\n# Apply specific stash\ngit stash apply stash@{2}\n# Apply and remove from stash list\ngit stash pop\n# Remove most recent stash\ngit stash drop\n# Remove specific stash\ngit stash drop stash@{1}\n# Clear all stashes\ngit stash clear\n# Show files in latest stash\ngit stash show\n# Show detailed diff\ngit stash show -p\n# Show specific stash diff\ngit stash show -p stash@{1}\nCodeWithHarry"
+    },
+    {
+      "page": 32,
+      "text": "Create Branch from Stash\nStash Specific Files\nCommon Use Cases\nSwitch Branches Quickly\nPull Without Committing\n# Create new branch and apply stash\ngit stash branch new-feature-branch\n# Interactive stash\ngit stash -p\n# Working on feature, need to fix bug on main\ngit stash\ngit checkout main\n# Fix bug...\ngit checkout feature-branch\ngit stash pop\ngit stash\ngit pull\ngit stash pop\nCodeWithHarry"
+    },
+    {
+      "page": 33,
+      "text": "Commands Summary\nCommand\nDescription\ngit stash\nSave changes to stash\ngit stash list\nList all stashes\ngit stash apply\nApply stash without removing\ngit stash pop\nApply and remove stash\ngit stash drop\nDelete a stash\ngit stash show\nView stash contents\ngit stash clear\nRemove all stashes\ngit stash branch [name]\nCreate branch from stash\nCodeWithHarry"
+    }
+  ]
+}

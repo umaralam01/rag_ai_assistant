@@ -1,0 +1,112 @@
+{
+  "pages": [
+    {
+      "page": 1,
+      "text": "Web Development for Data Scientists\nWhy Learn Web Development as a Data Scientist?\nMost data science work involves exploring datasets, building models, and\nanalyzing results. However, in many real-world situations, the value of your work\nincreases significantly when others can interact with it. Web development provides\na way to make your models and insights accessible through simple user interfaces\nor APIs.\nEven a basic understanding of web technologies allows you to:\nPresent your results beyond notebooks\nCreate simple forms to collect user input\nServe your machine learning models via a web application\nShare interactive visualizations or summaries\nHow Much Web Development is Enough?\nAs a data scientist, you do not need to become a full-stack web developer. Instead,\nit’s more practical to focus on a few key skills that complement your existing\nworkflow:\nHTML to create and structure web pages\nCSS to control the appearance and layout\nFlask (Python Framework) to build lightweight web applications and APIs\nThese skills are sufficient for creating interfaces where users can interact with your\nmodels or view results dynamically.\n• \n• \n• \n• \n• \n• \n•"
+    },
+    {
+      "page": 2,
+      "text": "A Practical Approach\nThis course introduces just enough web development to support your work as a\ndata scientist. The goal is to help you understand how to connect the outputs of\nyour models with simple, user-friendly web interfaces using tools you’re already\ncomfortable with—primarily Python.\nWe will begin with foundational concepts like HTML and CSS, and then move to\nusing Flask for building basic applications."
+    },
+    {
+      "page": 3,
+      "text": "HTML for Data Scientists\nWhat is HTML?\nHTML (HyperText Markup Language) is the standard language used to define the\nstructure of web pages. It tells the browser how to display content like text, forms,\nbuttons, and tables.\nAs a data scientist, you can use HTML to:\nCreate forms that take input from users\nDisplay model results on a page\nStructure information clearly\nBasic HTML Elements\nPage Structure\n• \n• \n• \n<!DOCTYPE html>\n<html>\n<head>\n<title>My Web App</title>\n</head>\n<body>\n<!-- Content goes here -->\n</body>\n</html>"
+    },
+    {
+      "page": 4,
+      "text": "Headings and Paragraphs\nForms and Inputs\nDisplaying Tables\nSummary\nYou only need to learn a small set of HTML tags to create basic interfaces:\nStructural: <html> , <head> , <body>\nText: <h1>  to <h6> , <p> , <span>\nForms: <form> , <input> , <button>\nTables: <table> , <tr> , <td> , <th>\n<h1>Model Results</h1>\n<p>This page shows the output of a machine learning model.</p>\n<form action=\"/predict\" method=\"post\">\n<label for=\"feature\">Enter a value:</label>\n<input type=\"text\" name=\"feature\" id=\"feature\">\n<button type=\"submit\">Predict</button>\n</form>\n<table>\n<tr>\n<th>Feature</th>\n<th>Value</th>\n</tr>\n<tr>\n<td>Age</td>\n<td>29</td>\n</tr>\n</table>\n• \n• \n• \n•"
+    },
+    {
+      "page": 5,
+      "text": "This is enough to build simple pages that collect input and display results. You will\nconnect these pages with Python using Flask in later lessons."
+    },
+    {
+      "page": 6,
+      "text": "CSS for Data Scientists\nWhat is CSS?\nCSS (Cascading Style Sheets) is used to control the appearance of HTML elements.\nIt allows you to change fonts, colors, spacing, and layout.\nFor data scientists, CSS helps make basic web interfaces more readable and user-\nfriendly. Even a few lines of CSS can make your pages easier to use.\nWays to Use CSS\nInline CSS (directly in the HTML tag)\nInternal CSS (inside a <style>  block)\n<p style=\"color: green;\">Prediction Successful</p>\n<head>\n<style>\n    body {\n      font-family: Arial, sans-serif;\n      margin: 40px;\n}\ninput {\n      padding: 5px;\n      margin-bottom: 10px;\n}\n    button {\n      background-color: #007BFF;\n      color: white;\n      border: none;"
+    },
+    {
+      "page": 7,
+      "text": "Common CSS Properties\nProperty\nWhat it does\ncolor\nText color\nbackground\nBackground color\nmargin\nSpace outside the element\npadding\nSpace inside the element\nfont-size\nSize of the text\nborder\nAdds a border around elements\ntext-align\nAligns text (left, center, right)\nExample\nWith the internal CSS above, this form will have padding and better spacing.\n      padding: 8px 12px;\n}\n</style>\n</head>\n<body>\n<h1>Prediction Result</h1>\n<form>\n<input type=\"text\" placeholder=\"Enter value\">\n<button type=\"submit\">Submit</button>\n</form>\n</body>"
+    },
+    {
+      "page": 8,
+      "text": "Summary\nYou don’t need to master CSS as a data scientist. Knowing how to:\nSet padding and margins\nStyle buttons and inputs\nControl font and color\nis often enough to make your tools more usable. We will now move on to\nconnecting everything using Python and Flask.\n• \n• \n•"
+    },
+    {
+      "page": 9,
+      "text": "Introduction to Flask Framework**\nWhy Flask?\nLightweight Python web framework\nIdeal for serving models and exposing APIs\nInstallation\nDemo App\nRunning the Server\nThen go to http://127.0.0.1:5000  in your browser.\n• \n• \npip install flask\nfrom flask import Flask\napp = Flask(__name__)\n@app.route('/')\ndef home():\nreturn 'Hello, Data Scientist!'\nif __name__ == '__main__':\n    app.run(debug=True)\npython app.py"
+    },
+    {
+      "page": 10,
+      "text": "Query Parameters in Flask\nWhat Are Query Parameters?\nQuery parameters are key-value pairs passed in the URL after a ? . For example:\nIn this case: - x  has the value 10  - y  has the value 20\nThey are often used to: - Pass values to your route - Trigger filtering or model\npredictions without using a form\nAccessing Query Parameters in Flask\nUse request.args  to access query parameters:\nExample\nVisiting this URL:\n/predict?x=10\\&y=20\nfrom flask import Flask, request\napp = Flask(__name__)\n@app.route('/predict')\ndef predict():\n    x = request.args.get('x')\n    y = request.args.get('y')\nreturn f\"x = {x}, y = {y}\""
+    },
+    {
+      "page": 11,
+      "text": "Will return:\nHandling Missing Values\nYou can provide a default value:\nOr use an if  statement to check if the parameter exists:\nUse Case Example\nYou might want to use query parameters to trigger a model prediction:\nSummary\nQuery parameters are passed using ?key=value  in the URL\nhttp://localhost:5000/predict?x=12&y=7\nx = 12, y = 7\nx = request.args.get('x', default=0)\nif 'x' in request.args:\n    x = request.args['x']\n@app.route('/predict')\ndef predict():\n    feature = request.args.get('value')\nif not feature:\nreturn \"No value provided\"\n# prediction = model.predict([feature])  # pseudocode\nreturn f\"Prediction result for input {feature}\"\n•"
+    },
+    {
+      "page": 12,
+      "text": "Use request.args.get('key')  to retrieve them\nUseful for triggering actions or passing values without forms\n• \n•"
+    },
+    {
+      "page": 13,
+      "text": "Serving Static Files in Flask\nWhat Are Static Files?\nStatic files are files that don’t change during execution. These typically include:\nCSS files\nJavaScript files\nImages and other media\nFlask serves static files by default from a folder named static , and they are\naccessible via the /static/  URL path.\nDefault Project Structure\nReferencing Static Files in HTML\nIn your HTML templates (inside the templates/  folder), use Flask’s url_for()\nfunction to correctly link to static assets:\nThis will generate /static/style.css  by default.\n• \n• \n• \nmy_app/\n├── app.py\n├── static/\n│   └── style.css\n├── templates/\n│   └── index.html\n<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">"
+    },
+    {
+      "page": 14,
+      "text": "Changing the Static Folder and URL Path\nIf you want Flask to serve static files from a different folder or under a different\nURL, use these options when creating your Flask app:\nIn this setup:\nFlask will look for files in the assets/  folder\nUsers will access files via /files/...  in the browser\nExample:\nGenerates:\nSummary\nstatic_folder : changes the folder Flask looks into for static files (default is \nstatic/ )\nstatic_url_path : changes the URL path used to serve those static files\n(default is /static )\nUse url_for('static', filename='...')  to refer to static files regardless of\nthe folder or path\nfrom flask import Flask\napp = Flask(\n    __name__,\n    static_folder='assets',\n# Physical folder on disk\n    static_url_path='/files'\n# URL path to access those files\n)\n• \n• \n<link rel=\"stylesheet\" href=\"{{ url_for('static', filename='style.css') }}\">\n/files/style.css\n• \n• \n•"
+    },
+    {
+      "page": 15,
+      "text": "Handling Forms in Flask\nWhy Use Forms?\nForms allow users to input values that can be processed by your Flask app. This is\nuseful for: - Passing feature values to a machine learning model - Uploading data -\nTriggering analysis\nCreating a Simple HTML Form\nHere is a basic HTML form that accepts a single input:\naction=\"/predict\" : the form will send data to the /predict  route\nmethod=\"post\" : the form uses POST request to send data\nHandling Form Data in Flask\nIn your app.py , set up a route to receive and process the form data:\n<form action=\"/predict\" method=\"post\">\n<input type=\"text\" name=\"feature1\" placeholder=\"Enter a value\">\n<button type=\"submit\">Submit</button>\n</form>\n• \n• \nfrom flask import Flask, request, render_template\napp = Flask(__name__)\n@app.route('/')\ndef index():\nreturn render_template('form.html')"
+    },
+    {
+      "page": 16,
+      "text": "Explanation:\nrequest.form  is used to access submitted form data\nThe key 'feature1'  corresponds to the name  attribute in the HTML input\nExample File Structure\nform.html Template\n@app.route('/predict', methods=['POST'])\ndef predict():\n    value = request.form['feature1']\nreturn f\"Received input: {value}\"\n• \n• \nmy_app/\n├── app.py\n├── templates/\n│   └── form.html\n<!DOCTYPE html>\n<html>\n<head>\n<title>Prediction Input</title>\n</head>\n<body>\n<h2>Enter Input</h2>\n<form action=\"/predict\" method=\"post\">\n<input type=\"text\" name=\"feature1\">\n<button type=\"submit\">Submit</button>\n</form>\n</body>\n</html>"
+    },
+    {
+      "page": 17,
+      "text": "Summary\nUse <form>  in your HTML to collect user input\nUse request.form['input_name']  in your Flask route to read submitted data\nForms enable dynamic interaction with your web app, such as sending input to\na model or triggering analysis\n• \n• \n•"
+    },
+    {
+      "page": 18,
+      "text": "Jinja2 Templating in Flask\nWhat is Jinja2?\nJinja2 is the templating engine used by Flask. It allows you to embed Python-like\nlogic inside your HTML templates. This is useful when you want to:\nDisplay variables (like model predictions or user input)\nLoop through lists (like rows in a DataFrame)\nUse conditions (like showing a message only when needed)\nPassing Variables from Flask to Templates\nIn your Flask route, use render_template()  and pass variables like this:\nHere, prediction  is a variable you can use inside index.html .\nUsing Variables in HTML\nInside your HTML template ( index.html ), use double curly braces {{ }}  to\ndisplay variables:\n• \n• \n• \nfrom flask import Flask, render_template\napp = Flask(__name__)\n@app.route('/')\ndef home():\n    result = \"Prediction: 42\"\nreturn render_template('index.html', prediction=result)"
+    },
+    {
+      "page": 19,
+      "text": "Control Structures\nIf Statements\nFor Loops\nYou can loop through a list or dictionary:\nIn your Flask route:\n<!DOCTYPE html>\n<html>\n<head>\n<title>Result</title>\n</head>\n<body>\n<h1>Model Output</h1>\n<p>{{ prediction }}</p>\n</body>\n</html>\n{% if prediction %}\n<p>Result: {{ prediction }}</p>\n{% else %}\n<p>No result available.</p>\n{% endif %}\n<ul>\n{% for item in items %}\n<li>{{ item }}</li>\n{% endfor %}\n</ul>"
+    },
+    {
+      "page": 20,
+      "text": "Escaping Output\nJinja2 automatically escapes variables to prevent HTML injection. If you trust the\nvariable and want to allow raw HTML, use |safe :\nSummary\nUse render_template()  to pass variables from Flask to HTML\nUse {{ variable }}  to display data\nUse {% ... %}  for control structures like loops and conditionals\nJinja2 makes it easy to combine logic and layout for dynamic pages\n@app.route('/list')\ndef show_list():\nreturn render_template('list.html', items=['Apple', 'Banana', 'Cherry'])\n<p>{{ some_html | safe }}</p>\n• \n• \n• \n•"
+    },
+    {
+      "page": 21,
+      "text": "Template Inheritance in Flask (Jinja2)\nWhat is Template Inheritance?\nWhen building web apps, many pages share a common layout — for example, a\nheader, footer, or navigation bar. Instead of repeating this code in every file, Jinja2\nallows you to define a base template that other templates can extend.\nThis keeps your code cleaner and easier to maintain.\nStep 1: Create a Base Template\nCreate a file called base.html  inside your templates/  folder.\n{% block title %}  and {% block content %}  are placeholders that child\ntemplates can fill.\n<!DOCTYPE html>\n<html>\n<head>\n<title>{% block title %}My App{% endblock %}</title>\n</head>\n<body>\n<header>\n<h1>My Flask App</h1>\n</header>\n<main>\n{% block content %}{% endblock %}\n</main>\n</body>\n</html>\n•"
+    },
+    {
+      "page": 22,
+      "text": "Step 2: Extend the Base Template\nCreate another HTML file, e.g.  index.html , that extends the base template:\nFlask Route Example\nFolder Structure\nSummary\nCreate a base.html  with {% block %}  sections\n{% extends \"base.html\" %}\n{% block title %}Home Page{% endblock %}\n{% block content %}\n<p>Welcome to the homepage.</p>\n{% endblock %}\nfrom flask import Flask, render_template\napp = Flask(__name__)\n@app.route('/')\ndef home():\nreturn render_template('index.html')\nmy_app/\n├── app.py\n├── templates/\n│   ├── base.html\n│   └── index.html\n•"
+    },
+    {
+      "page": 23,
+      "text": "Use {% extends \"base.html\" %}  in child templates\nThis avoids repetition and keeps your HTML organized\nTemplate inheritance is useful as your app grows and you start creating multiple\npages that share the same layout.\n• \n•"
+    },
+    {
+      "page": 24,
+      "text": "Message Flashing in Flask\nWhat Is Flashing?\nFlashing is a way to send temporary messages from the backend (Flask) to the\nfrontend (HTML). These messages are usually used for:\nStatus updates (e.g., “Prediction complete”)\nError messages (e.g., “Invalid input”)\nNotifications (e.g., “File uploaded successfully”)\nFlashed messages are stored in the session and automatically cleared after being\ndisplayed.\nStep 1: Set a Secret Key\nFlashing uses Flask’s session, so you must set a secret key:\nStep 2: Flash a Message in Your Route\nUse flash()  to send a message:\n• \n• \n• \nfrom flask import Flask\napp = Flask(__name__)\napp.secret_key = 'your_secret_key'\nfrom flask import flash, redirect, render_template, request\n@app.route('/predict', methods=['POST'])\ndef predict():\n    feature = request.form.get('feature1')"
+    },
+    {
+      "page": 25,
+      "text": "flash('message')  stores the message\nredirect('/')  sends the user back to a route where the message will be\ndisplayed\nStep 3: Display Flashed Messages in the Template\nIn your base or main template (e.g.  index.html  or base.html ):\nThis block retrieves all flashed messages and displays them in a list. You can style\nthem with CSS as needed.\nSummary\nUse flash('your message')  to send a message\nUse get_flashed_messages()  in your template to retrieve and display them\nUseful for alerts, validation feedback, and user notifications\nif not feature:\n        flash('Please enter a value')\nreturn redirect('/')\n# process prediction here\n    flash('Prediction complete')\nreturn redirect('/')\n• \n• \n{% with messages = get_flashed_messages() %}\n{% if messages %}\n<ul>\n{% for msg in messages %}\n<li>{{ msg }}</li>\n{% endfor %}\n</ul>\n{% endif %}\n{% endwith %}\n• \n• \n•"
+    },
+    {
+      "page": 26,
+      "text": "Creating an API Using jsonify  in Flask\nWhat Is an API?\nAn API (Application Programming Interface) allows other programs (like a frontend,\nscript, or another server) to communicate with your Flask app using structured data\n—typically JSON.\nThis is useful when: - You want to expose your ML model as a service - You want\nother tools to send input and receive predictions\nWhat Is jsonify ?\nFlask’s jsonify()  function converts Python dictionaries or lists into properly\nformatted JSON responses.\nExample: Basic API Endpoint\nfrom flask import Flask, request, jsonify\napp = Flask(__name__)\n@app.route('/api/predict', methods=['GET'])\ndef predict():\n    value = request.args.get('value')\nif value is None:\nreturn jsonify({'error': 'Missing input'}), 400\n# Simulated prediction (replace with actual model call)\n    result = int(value) * 2"
+    },
+    {
+      "page": 27,
+      "text": "How to Call It\nVisit this in your browser or use a tool like Postman or curl :\nResponse:\nReturning Error Codes\nYou can return custom status codes with jsonify() :\nThis helps the client understand what went wrong.\nSummary\nUse jsonify()  to return JSON from your Flask routes\nIdeal for serving ML model outputs or exposing data\nCombine with request.args  (GET) or request.json  (POST) for flexible input\nhandling\nreturn jsonify({\n'input': value,\n'prediction': result\n})\nhttp://localhost:5000/api/predict?value=7\n{\n\"input\": \"7\",\n\"prediction\": 14\n}\nreturn jsonify({'error': 'Invalid input'}), 400\n• \n• \n•"
+    }
+  ]
+}
