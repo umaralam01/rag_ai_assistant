@@ -1,0 +1,684 @@
+<!--
+Updated: Animated Welcome + Main Pages for Multimodal RAG (Offline)
+Files included below: save the first block as `welcome.html` and the second block as `main.html`.
+This version contains a richer canvas-based Fire + Water + Particle composition, keyboard accessible Enter button, mute control, and reduced-motion fallback.
+
+Notes:
+- All visuals are procedural (canvas) — no external libraries required.
+- Add an `ambient.mp3` in the same folder if you want background audio (optional).
+- If you want a downloadable ZIP, ask me and I'll create it.
+-->
+
+<!-- ===== welcome.html ===== -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Welcome — Multimodal RAG (Offline)</title>
+    <meta
+      name="description"
+      content="Welcome page for the Multimodal RAG offline demo with animated fire, water, air, and data elements."
+    />
+    <style>
+      :root {
+        --bg: #081025;
+        --glass: rgba(255, 255, 255, 0.03);
+        --accent1: #7c3aed;
+        --accent2: #06b6d4;
+        --accent3: #ff7a18;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
+        color: #eaf6ff;
+        background: radial-gradient(
+            800px 400px at 10% 10%,
+            rgba(124, 58, 237, 0.06),
+            transparent
+          ),
+          radial-gradient(
+            700px 350px at 90% 90%,
+            rgba(6, 182, 212, 0.04),
+            transparent
+          ),
+          var(--bg);
+      }
+      .wrap {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 28px;
+      }
+      .card {
+        width: min(1150px, 96%);
+        max-width: 1150px;
+        height: 640px;
+        border-radius: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        box-shadow: 0 18px 60px rgba(2, 6, 23, 0.7);
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 420px;
+      }
+      .left {
+        padding: 44px 56px;
+        display: flex;
+        flex-direction: column;
+      }
+      .brand {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+      .logo {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent2), var(--accent1));
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 700;
+      }
+      h1 {
+        font-size: 36px;
+        margin: 8px 0 6px;
+      }
+      p.lead {
+        color: rgba(230, 238, 248, 0.8);
+        margin: 0 0 14px;
+      }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 14px;
+      }
+
+      .enter {
+        padding: 14px 26px;
+        border-radius: 14px;
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        border: none;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 14px 40px rgba(6, 182, 212, 0.06);
+        transition: transform 0.18s ease, box-shadow 0.18s;
+      }
+      .enter:active {
+        transform: translateY(2px);
+      }
+      .mute {
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        color: rgba(230, 238, 248, 0.9);
+        cursor: pointer;
+      }
+
+      .hint {
+        margin-top: auto;
+        color: rgba(230, 238, 248, 0.6);
+        font-size: 13px;
+      }
+
+      .right {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.01),
+          rgba(255, 255, 255, 0.008)
+        );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+      }
+      .canvas-wrap {
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        position: relative;
+        display: grid;
+        place-items: center;
+      }
+      canvas {
+        border-radius: 50%;
+        display: block;
+      }
+      .core {
+        position: absolute;
+        z-index: 30;
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(180deg, var(--accent2), #075985);
+        box-shadow: 0 18px 60px rgba(6, 182, 212, 0.06);
+        font-weight: 700;
+        color: white;
+      }
+      .blip {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        box-shadow: 0 6px 18px rgba(124, 58, 237, 0.24);
+      }
+
+      footer {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 12px;
+        text-align: center;
+        font-size: 12px;
+        color: rgba(230, 238, 248, 0.75);
+      }
+      footer .pulse {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          rgba(124, 58, 237, 0.12),
+          rgba(6, 182, 212, 0.08)
+        );
+        box-shadow: 0 8px 30px rgba(6, 182, 212, 0.03);
+      }
+
+      /* full-screen flourish */
+      .flyout {
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        width: 1600px;
+        height: 1600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 30% 30%,
+          rgba(124, 58, 237, 0.9),
+          rgba(6, 182, 212, 0.75)
+        );
+        z-index: 60;
+        transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1);
+        opacity: 0.98;
+      }
+      .flyout.show {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      /* responsive */
+      @media (max-width: 980px) {
+        .card {
+          grid-template-columns: 1fr;
+        }
+        .right {
+          order: -1;
+          padding: 16px;
+        }
+        h1 {
+          font-size: 28px;
+        }
+      }
+
+      /* reduced motion preference */
+      @media (prefers-reduced-motion: reduce) {
+        .enter {
+          transition: none;
+        }
+        canvas {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card" role="region" aria-label="Welcome to Multimodal RAG">
+        <div class="left">
+          <div class="brand">
+            <div class="logo">ML</div>
+            <div>
+              <div style="font-weight: 700">Multimodal RAG — Offline</div>
+              <div style="font-size: 13px; color: rgba(231, 241, 255, 0.75)">
+                Unified semantic retrieval for Files, Images and Audio
+              </div>
+            </div>
+          </div>
+
+          <h1>Welcome to Offline Multimodal RAG-AI System</h1>
+          <p class="lead">
+           Retrieving Knowledge, Generating Wisdom
+          </p>
+
+          <form action="/up" method="POST">
+            <div class="cta-row">
+              <button
+                type="submit"
+                id="enterBtn"
+                class="enter"
+                aria-label="Activate Interface"
+              >
+               Activate Interface
+              </button>
+             
+            </div>
+          </form>
+        </div>
+
+        <div class="right">
+          <div class="canvas-wrap" aria-hidden="true">
+            <canvas
+              id="animCanvas"
+              width="640"
+              height="640"
+              role="img"
+              aria-label="Decorative element showing animated elements"
+            ></canvas>
+            <div class="core">RAG-AI</div>
+          </div>
+          <div
+            style="
+              margin-top: 12px;
+              text-align: center;
+              color: rgba(231, 241, 255, 0.8);
+              max-width: 260px;
+            "
+          >
+           An adaptive mind for the offline RAG realm — fast, self-contained, and endlessly curious.
+           Driven by Local RAG Intelligence Engine
+          </div>
+          <footer>
+            <span class="pulse">Powered by Local LLM RAG Engine</span>
+          </footer>
+        </div>
+
+        <div class="overlay" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div id="flyout" class="flyout" aria-hidden="true"></div>
+
+    <audio id="bgAudio" loop preload="none">
+      <source src="ambient.mp3" type="audio/mpeg" />
+    </audio>
+
+    <script>
+      // ---------------------- Utility & Reduced motion ----------------------
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+
+      // ---------------------- Canvas Setup ----------------------
+      const canvas = document.getElementById("animCanvas");
+      const ctx = canvas.getContext("2d");
+      let W = canvas.width,
+        H = canvas.height;
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = Math.max(300, Math.floor(rect.width * ratio));
+        canvas.height = Math.max(300, Math.floor(rect.height * ratio));
+        W = canvas.width;
+        H = canvas.height;
+      }
+      window.addEventListener("resize", () => {
+        resizeCanvas();
+      });
+      resizeCanvas();
+
+      // ---------------------- Particle systems ----------------------
+      // Fire: upward-moving ember particles (orange)
+      const fire = [];
+      const fireMax = 160;
+      function spawnFire() {
+        if (fire.length > fireMax) return;
+        const x = W * 0.5 + (Math.random() - 0.5) * 160;
+        const y = H * 0.65 + Math.random() * 40;
+        fire.push({
+          x,
+          y,
+          vx: (Math.random() - 0.5) * 0.6,
+          vy: -1.2 - Math.random() * 1.6,
+          r: 1 + Math.random() * 3,
+          life: 40 + Math.random() * 80,
+          hue: 18 + Math.random() * 30,
+        });
+      }
+
+      // Water: flowing ribbon particles (blue), stored as segments
+      const water = [];
+      const waterMax = 80;
+      function spawnWater() {
+        if (water.length > waterMax) return;
+        const baseX = W * 0.35 + Math.sin(Date.now() / 1200) * 40;
+        const baseY = H * 0.55 + Math.cos(Date.now() / 1100) * 30;
+        const len = 18 + Math.floor(Math.random() * 20);
+        const segs = [];
+        for (let i = 0; i < len; i++) {
+          segs.push({
+            x: baseX + Math.sin(i / 3 + Date.now() / 900) * 18,
+            y: baseY + i * 6 + Math.random() * 6,
+          });
+        }
+        water.push({ segs, life: 160 + Math.random() * 200, alpha: 0.6 });
+      }
+
+      // Air: tiny drifting particles
+      const air = [];
+      const airMax = 200;
+      function spawnAir() {
+        if (air.length > airMax) return;
+        const x = Math.random() * W;
+        const y = Math.random() * H;
+        const r = 0.6 + Math.random() * 1.8;
+        air.push({
+          x,
+          y,
+          vx: (Math.random() - 0.5) * 0.2,
+          vy: (Math.random() - 0.5) * 0.2,
+          r,
+          life: 200 + Math.random() * 400,
+        });
+      }
+
+      // Data shards: square shards representing documents/images
+      const shards = [];
+      const shardMax = 40;
+      function spawnShard() {
+        if (shards.length > shardMax) return;
+        const angle = Math.random() * Math.PI * 2;
+        const dist = 120 + Math.random() * 160;
+        const cx = W / 2 + Math.cos(angle) * dist;
+        const cy = H / 2 + Math.sin(angle) * dist;
+        shards.push({
+          x: cx,
+          y: cy,
+          vx: (W / 2 - cx) / 120 + (Math.random() - 0.5) * 0.6,
+          vy: (H / 2 - cy) / 120 + (Math.random() - 0.5) * 0.6,
+          size: 8 + Math.random() * 14,
+          rot: Math.random() * Math.PI * 2,
+          life: 220 + Math.random() * 220,
+        });
+      }
+
+      // Init particle creation
+      for (let i = 0; i < 40; i++) {
+        spawnAir();
+        spawnShard();
+      }
+
+      // ---------------------- Drawing helpers ----------------------
+      function drawFire() {
+        for (let i = fire.length - 1; i >= 0; i--) {
+          const p = fire[i];
+          p.x += p.vx;
+          p.y += p.vy;
+          p.life -= 1;
+          p.r *= 0.995;
+          // glow
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 6);
+          grad.addColorStop(0, `hsla(${p.hue},90%,60%,${0.9})`);
+          grad.addColorStop(0.4, `hsla(${p.hue},85%,50%,${0.45})`);
+          grad.addColorStop(1, `hsla(38,90%,40%,0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 6, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.fillStyle = `hsla(${p.hue},95%,55%,${0.95})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+          if (p.life <= 0 || p.y < -50) fire.splice(i, 1);
+        }
+      }
+
+      function drawWater() {
+        ctx.save();
+        ctx.globalCompositeOperation = "lighter";
+        for (let i = water.length - 1; i >= 0; i--) {
+          const wv = water[i];
+          wv.life -= 1;
+          wv.alpha *= 0.9995;
+          // draw ribbon as gradient stroke through segs
+          const segs = wv.segs;
+          ctx.lineWidth = 8;
+          ctx.beginPath();
+          for (let j = 0; j < segs.length; j++) {
+            const s = segs[j];
+            const nx = s.x + Math.sin(Date.now() / 700 + j / 6) * 6;
+            const ny = s.y + Math.cos(Date.now() / 800 + j / 7) * 4;
+            if (j === 0) ctx.moveTo(nx, ny);
+            else ctx.lineTo(nx, ny);
+          }
+          const grad = ctx.createLinearGradient(
+            segs[0].x,
+            segs[0].y,
+            segs[segs.length - 1].x,
+            segs[segs.length - 1].y
+          );
+          grad.addColorStop(0, "rgba(6,182,212," + 0.05 * wv.alpha + ")");
+          grad.addColorStop(0.5, "rgba(124,58,237," + 0.12 * wv.alpha + ")");
+          grad.addColorStop(1, "rgba(6,182,212," + 0.15 * wv.alpha + ")");
+          ctx.strokeStyle = grad;
+          ctx.stroke();
+          if (wv.life <= 0) water.splice(i, 1);
+        }
+        ctx.restore();
+      }
+
+      function drawAir() {
+        ctx.save();
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = "rgba(255,255,255,0.06)";
+        for (let i = air.length - 1; i >= 0; i--) {
+          const a = air[i];
+          a.x += a.vx;
+          a.y += a.vy;
+          a.life -= 1;
+          if (Math.random() < 0.005) a.vx += (Math.random() - 0.5) * 0.05;
+          if (Math.random() < 0.005) a.vy += (Math.random() - 0.5) * 0.05;
+          ctx.beginPath();
+          ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+          ctx.fill();
+          if (a.life <= 0) air.splice(i, 1);
+        }
+        ctx.restore();
+      }
+
+      function drawShards() {
+        ctx.save();
+        for (let i = shards.length - 1; i >= 0; i--) {
+          const s = shards[i];
+          s.x += s.vx;
+          s.y += s.vy;
+          s.rot += 0.02;
+          s.life -= 1;
+          ctx.save();
+          ctx.translate(s.x, s.y);
+          ctx.rotate(s.rot);
+          ctx.fillStyle = "rgba(255,255,255,0.04)";
+          ctx.fillRect(
+            -s.size / 2 - 1,
+            -s.size / 2 - 1,
+            s.size + 2,
+            s.size + 2
+          );
+          ctx.fillStyle = "rgba(124,58,237,0.9)";
+          ctx.fillRect(-s.size / 2, -s.size / 2, s.size, s.size);
+          ctx.restore();
+          if (s.life <= 0) shards.splice(i, 1);
+        }
+        ctx.restore();
+      }
+
+      // central glow
+      function drawCoreGlow() {
+        const cx = W / 2,
+          cy = H / 2;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, 220);
+        g.addColorStop(0, "rgba(124,58,237,0.18)");
+        g.addColorStop(0.4, "rgba(6,182,212,0.06)");
+        g.addColorStop(1, "rgba(0,0,0,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 220, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // ---------------------- Animation loop ----------------------
+      let lastSpawn = 0;
+      function frame() {
+        ctx.clearRect(0, 0, W, H);
+        // subtle background gradient
+        const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+        bgGrad.addColorStop(0, "rgba(10,12,20,0.7)");
+        bgGrad.addColorStop(1, "rgba(5,7,14,0.7)");
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, W, H);
+
+        drawCoreGlow();
+        // spawn patterns
+        const t = Date.now();
+        if (t - lastSpawn > 50) {
+          spawnAir();
+          if (Math.random() > 0.6) spawnFire();
+          if (Math.random() > 0.94) spawnWater();
+          if (Math.random() > 0.88) spawnShard();
+          lastSpawn = t;
+        }
+
+        drawWater();
+        drawFire();
+        drawAir();
+        drawShards();
+
+        requestAnimationFrame(frame);
+      }
+
+      if (!prefersReducedMotion) frame();
+
+  
+
+      // click anywhere on left to enter (but not on buttons)
+      document.querySelector(".left").addEventListener("click", (e) => {
+        if (!e.target.closest("button")) doEnter();
+      });
+
+      // keyboard handling
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          doEnter();
+        }
+        if (e.key.toLowerCase() === "m") {
+          toggleAudio();
+        }
+      });
+
+    
+
+      // Respect prefers-reduced-motion by disabling heavy animations
+      if (prefersReducedMotion) {
+        document.getElementById("enterBtn").focus();
+      }
+    </script>
+  </body>
+</html>
+
+<!-- ===== main.html ===== -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Main — Multimodal RAG</title>
+    <style>
+      :root {
+        --bg: #071124;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(180deg, #071124 0%, #0f1724 100%);
+        color: #e7f1ff;
+        font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial;
+      }
+      .head {
+        padding: 28px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .logo {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #06b6d4, #7c3aed);
+        display: grid;
+        place-items: center;
+        color: white;
+        font-weight: 700;
+      }
+      main {
+        padding: 18px;
+      }
+      .panel {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 12px 40px rgba(2, 6, 23, 0.6);
+      }
+      .cta {
+        display: inline-block;
+        padding: 10px 14px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #7c3aed, #06b6d4);
+        color: white;
+        font-weight: 700;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="head">
+      <div class="logo">ML</div>
+      <div>
+        <h2 style="margin: 0">Multimodal RAG — Offline</h2>
+        <div style="color: rgba(231, 241, 255, 0.7); font-size: 13px">
+          You're now inside the offline demo — start exploring the multimodal
+          index.
+        </div>
+      </div>
+    </div>
+    <main>
+      <section class="panel">
+        <h3 style="margin-top: 0">Quick Initiation</h3>
+        <ol>
+          <li>Feed your data — documents, images, or sound — into the RAG core.</li>
+          <li>Let the engine encode, retrieve, and fuse multimodal intelligence.</li>
+          <li>Converse with your local LLM, powered by real context..</li>
+        </ol>
+        <p>
+          Customize this interface with your own RAG controls and local hooks.
+        </p>
+        <a class="cta" href="#">Open RAG Terminal</a>
+      </section>
+    </main>
+  </body>
+</html>

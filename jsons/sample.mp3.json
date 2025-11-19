@@ -1,0 +1,47 @@
+{
+  "chunks": [
+    {
+      "number": 1,
+      "title": "sample",
+      "start": 0.0,
+      "end": 2.0,
+      "text": " Welcome to 100 days of code guys."
+    },
+    {
+      "number": 2,
+      "title": "sample",
+      "start": 2.0,
+      "end": 7.0,
+      "text": " In 100 days of code, we are going to learn Python programming from zero to job ready."
+    },
+    {
+      "number": 3,
+      "title": "sample",
+      "start": 7.0,
+      "end": 10.0,
+      "text": " And if you have given your 100 days, dedicated 100 days,"
+    },
+    {
+      "number": 4,
+      "title": "sample",
+      "start": 10.0,
+      "end": 13.0,
+      "text": " then I will tell you in the bite size lesson."
+    },
+    {
+      "number": 5,
+      "title": "sample",
+      "start": 13.0,
+      "end": 17.0,
+      "text": " Python programming, we will take it as a 0-zero advance."
+    },
+    {
+      "number": 6,
+      "title": "sample",
+      "start": 17.0,
+      "end": 22.0,
+      "text": " Starting, I will show you how easy and easy it is to play children and play Python."
+    }
+  ],
+  "text": " Welcome to 100 days of code guys. In 100 days of code, we are going to learn Python programming from zero to job ready. And if you have given your 100 days, dedicated 100 days, then I will tell you in the bite size lesson. Python programming, we will take it as a 0-zero advance. Starting, I will show you how easy and easy it is to play children and play Python."
+}
